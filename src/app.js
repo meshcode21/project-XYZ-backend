@@ -4,7 +4,7 @@ import errorHandler from './middlewares/errorHandler.js';
 import connectDB from './config/db.js';
 
 const app = express();
-// connectDB();
+connectDB();
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
