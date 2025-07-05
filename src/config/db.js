@@ -1,6 +1,6 @@
 import mysql from 'mysql2';
 
-const pool = mysql.createPool({
+const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -8,16 +8,15 @@ const pool = mysql.createPool({
 });
 
 const connectDB = () => {
-  pool.getConnection((err, connection) => {
+  db.connect((err) => {
     if (err) {
-      console.error('Database connection failed:', err);
+      console.error('Error connecting to the database:', err);
       process.exit(1);
     } else {
-      console.log('MySQL connected');
-      connection.release();
+      console.log('Database connected successfully');
     }
   });
 };
 
-export { pool };
-export default connectDB;
+export { connectDB };
+export default db;

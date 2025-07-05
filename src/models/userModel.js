@@ -1,23 +1,10 @@
-import { pool } from '../config/db.js';
+import db from "../config/db.js";
 
-export const getAllUsers = () => {
+export const getUserByEmail = (email)=>{
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM users', (err, results) => {
+    db.query('SELECT * FROM users WHERE email = ?',[email], (err, results) => {
       if (err) return reject(err);
       resolve(results);
     });
   });
-};
-
-export const createUser = (user) => {
-  console.log('Creating user:', user);
-  const { name, email, password } = user;
-  return new Promise((resolve, reject) => {
-    pool.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-      [name, email, password],
-      (err, results) => {
-        if (err) return reject(err);
-        resolve({ id: results.insertId, ...user });
-      });
-  });
-};
+}
